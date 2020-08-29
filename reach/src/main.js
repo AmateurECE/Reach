@@ -10,7 +10,7 @@
 // LAST EDITED:     08/29/2020
 ////
 
-const { ServerProtocol } = require('../../common/js/Protocol.js');
+const { ServerProtocol } = require('protocol.js');
 
 const fs = require('fs');
 const WebSocket = require('ws');
@@ -28,8 +28,9 @@ async function readChunk(fileDescriptor, request) {
 }
 
 const server = new WebSocket.Server({port: 5000});
+const filePath = '../dreamland.flac';
 server.on('connection', ws => {
-    fs.open('dreamland.flac', 'r', (error, fd) => {
+    fs.open(filePath, 'r', (error, fd) => {
         const protocol = new ServerProtocol(ws, request => {
             return readChunk(fd, request);
         });
