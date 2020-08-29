@@ -10,7 +10,7 @@
 // LAST EDITED:     08/29/2020
 ////
 
-const { ServerProtocol } = require('protocol.js');
+const { ServerProtocol } = require('./protocol.js');
 
 const fs = require('fs');
 const WebSocket = require('ws');
