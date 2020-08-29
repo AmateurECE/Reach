@@ -7,17 +7,33 @@
 //
 // CREATED:         08/19/2020
 //
-// LAST EDITED:     08/19/2020
+// LAST EDITED:     08/29/2020
 ////
 
-const WebSocket = require('ws');
-const port = 5000;
-const server = new WebSocket.Server({ port });
+const { ServerProtocol } = require('../../common/js/Protocol.js');
 
-// TODO: Make call to django auth endpoint to verify user credentials.
+const fs = require('fs');
+const WebSocket = require('ws');
+const util = require('util');
+
+const readFile = util.promisify(fs.read);
+async function readChunk(fileDescriptor, request) {
+    const chunk = await readFile(fileDescriptor, {position: request.position});
+    return {
+        message: {
+            position: request.position, length: chunk.bytesRead
+        },
+        data: chunk.buffer
+    };
+}
+
+const server = new WebSocket.Server({port: 5000});
 server.on('connection', ws => {
-    ws.on('message', message => {
-        ws.send(`Echo: ${message}`);
+    fs.open('dreamland.flac', 'r', (error, fd) => {
+        const protocol = new ServerProtocol(ws, request => {
+            return readChunk(fd, request);
+        });
+        protocol.startListening();
     });
 });
 
