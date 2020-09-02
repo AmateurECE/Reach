@@ -1,0 +1,319 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		18FDA1BD24FC00B3005B7593 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18FDA1BC24FC00B3005B7593 /* main.cpp */; };
+		18FDA1C524FC00DD005B7593 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FDA1C424FC00DD005B7593 /* AudioToolbox.framework */; };
+		18FDA1C724FC0391005B7593 /* libFLAC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18FDA1C624FC0391005B7593 /* libFLAC.a */; };
+		18FDA1CA24FC1093005B7593 /* flac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18FDA1C824FC1093005B7593 /* flac.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		18FDA1B724FC00B2005B7593 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		18FDA1B924FC00B3005B7593 /* LearnToFlac */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LearnToFlac; sourceTree = BUILT_PRODUCTS_DIR; };
+		18FDA1BC24FC00B3005B7593 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		18FDA1C424FC00DD005B7593 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		18FDA1C624FC0391005B7593 /* libFLAC.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFLAC.a; path = ../../../../../../usr/local/Cellar/flac/1.3.3/lib/libFLAC.a; sourceTree = "<group>"; };
+		18FDA1C824FC1093005B7593 /* flac.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = flac.cpp; sourceTree = "<group>"; };
+		18FDA1C924FC1093005B7593 /* flac.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = flac.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		18FDA1B624FC00B2005B7593 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18FDA1C724FC0391005B7593 /* libFLAC.a in Frameworks */,
+				18FDA1C524FC00DD005B7593 /* AudioToolbox.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		18FDA1B024FC00B2005B7593 = {
+			isa = PBXGroup;
+			children = (
+				18FDA1BB24FC00B3005B7593 /* LearnToFlac */,
+				18FDA1BA24FC00B3005B7593 /* Products */,
+				18FDA1C324FC00DD005B7593 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		18FDA1BA24FC00B3005B7593 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				18FDA1B924FC00B3005B7593 /* LearnToFlac */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		18FDA1BB24FC00B3005B7593 /* LearnToFlac */ = {
+			isa = PBXGroup;
+			children = (
+				18FDA1BC24FC00B3005B7593 /* main.cpp */,
+				18FDA1C824FC1093005B7593 /* flac.cpp */,
+				18FDA1C924FC1093005B7593 /* flac.hpp */,
+			);
+			path = LearnToFlac;
+			sourceTree = "<group>";
+		};
+		18FDA1C324FC00DD005B7593 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				18FDA1C624FC0391005B7593 /* libFLAC.a */,
+				18FDA1C424FC00DD005B7593 /* AudioToolbox.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		18FDA1B824FC00B2005B7593 /* LearnToFlac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18FDA1C024FC00B3005B7593 /* Build configuration list for PBXNativeTarget "LearnToFlac" */;
+			buildPhases = (
+				18FDA1B524FC00B2005B7593 /* Sources */,
+				18FDA1B624FC00B2005B7593 /* Frameworks */,
+				18FDA1B724FC00B2005B7593 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LearnToFlac;
+			productName = LearnToFlac;
+			productReference = 18FDA1B924FC00B3005B7593 /* LearnToFlac */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		18FDA1B124FC00B2005B7593 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1030;
+				ORGANIZATIONNAME = "Ethan Twardy";
+				TargetAttributes = {
+					18FDA1B824FC00B2005B7593 = {
+						CreatedOnToolsVersion = 10.3;
+					};
+				};
+			};
+			buildConfigurationList = 18FDA1B424FC00B2005B7593 /* Build configuration list for PBXProject "LearnToFlac" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 18FDA1B024FC00B2005B7593;
+			productRefGroup = 18FDA1BA24FC00B3005B7593 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				18FDA1B824FC00B2005B7593 /* LearnToFlac */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		18FDA1B524FC00B2005B7593 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18FDA1BD24FC00B3005B7593 /* main.cpp in Sources */,
+				18FDA1CA24FC1093005B7593 /* flac.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		18FDA1BE24FC00B3005B7593 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		18FDA1BF24FC00B3005B7593 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		18FDA1C124FC00B3005B7593 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/flac/1.3.3/include,
+					/usr/local/Cellar/libogg/1.3.4/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/flac/1.3.3/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		18FDA1C224FC00B3005B7593 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/flac/1.3.3/include,
+					/usr/local/Cellar/libogg/1.3.4/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/flac/1.3.3/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		18FDA1B424FC00B2005B7593 /* Build configuration list for PBXProject "LearnToFlac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18FDA1BE24FC00B3005B7593 /* Debug */,
+				18FDA1BF24FC00B3005B7593 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		18FDA1C024FC00B3005B7593 /* Build configuration list for PBXNativeTarget "LearnToFlac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18FDA1C124FC00B3005B7593 /* Debug */,
+				18FDA1C224FC00B3005B7593 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 18FDA1B124FC00B2005B7593 /* Project object */;
+}

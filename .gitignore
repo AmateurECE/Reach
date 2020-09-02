@@ -2,7 +2,7 @@
 node_modules/
 __pycache__
 /reach/build/
-/static/build/
+/reach-spa/build/
 dreamland.flac
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
@@ -14,9 +14,6 @@ dreamland.flac
 # testing
 /coverage
 
-# production
-/build
-
 # misc
 .DS_Store
 .env.local
@@ -27,3 +24,8 @@ dreamland.flac
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+*.xcuserstate
+ethantwardy.xcuserdatad
+
+/reach-spa/src/fetch-stream-audio/
