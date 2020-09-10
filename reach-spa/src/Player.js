@@ -7,55 +7,39 @@
 //
 // CREATED:         08/29/2020
 //
-// LAST EDITED:     08/30/2020
+// LAST EDITED:     09/09/2020
 ////
 
 import React from 'react';
+import Module from './flac-decoder/StreamDecoder';
 
 const url = 'ws://localhost:5000';
 class Player extends React.Component {
+    static flac = undefined;
+
     constructor(properties) {
         super(properties);
-        this.webSocket = new WebSocket(url);
         this.state = {
-            connected: false
+            message: ""
         };
 
-        this.webSocket.onopen = () => { this.setState(state => ({
-            connected: true})); };
-        this.webSocket.onmessage = message => { this.playSegment(message); };
-
-        this.obtainSegment = this.obtainSegment.bind(this);
-        this.playSegment = this.playSegment.bind(this);
+        this.initializeDecoder();
+        this.obtainMessage = () => {};
     }
 
-    obtainSegment() {
-        this.webSocket.send(JSON.stringify({position: 0}));
-    }
-
-    playSegment(message) {
-        if (message.data instanceof Blob) {
-            // This is the end of a transaction. Play the associated segment.
-            try {
-                window.AudioContext = window.AudioContext
-                    || window.webkitAudioContext;
-                this.audioContext = new AudioContext();
-            } catch (error) {
-                alert('Web Audio API is not supported in this browser');
-            }
-
-            // Begin decoding
-            // End decoding
-
-            // const arrayBuffer =
-            // context.createBuffer(message.data.arrayBuffer());
-            // const source = context.createBufferSource();
-            // source.buffer = arrayBuffer;
-            // source.connect(context.destination);
-            // source.start(0);
-        } else {
-            this.segmentMetadata = JSON.parse(message.data);
+    initializeDecoder() {
+        if (Player.flac === undefined) {
+            Player.flac = null;
+            Module().then(flac => {
+                Player.flac = flac;
+                this.obtainMessage = this.obtainMessage.bind(this);
+            });
         }
+    }
+
+    obtainMessage() {
+        const decoder = Player.flac.StreamDecoder();
+        this.setState(state => ({message: decoder.getMessage()}));
     }
 
     render() {
@@ -63,8 +47,8 @@ class Player extends React.Component {
         return (
             <div className="Player">
               {connected &&
-               <button onClick={this.obtainSegment}>
-                 Get Segment
+               <button onClick={this.obtainMessage}>
+                 {this.state.message || "Get Segment"}
                </button>
               }
             </div>

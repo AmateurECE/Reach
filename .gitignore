@@ -29,3 +29,6 @@ yarn-error.log*
 ethantwardy.xcuserdatad
 
 /reach-spa/src/fetch-stream-audio/
+
+StreamDecoder.js
+StreamDecoder.wasm
