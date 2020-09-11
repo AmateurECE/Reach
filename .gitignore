@@ -28,7 +28,6 @@ yarn-error.log*
 *.xcuserstate
 ethantwardy.xcuserdatad
 
-/reach-spa/src/fetch-stream-audio/
-
-StreamDecoder.js
-StreamDecoder.wasm
+/reach-spa/ReachCodec/build/
+/reach-spa/ReachCodec/log/
+/reach-spa/src/ReachCodecGlue.js

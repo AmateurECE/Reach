@@ -7,50 +7,44 @@
 //
 // CREATED:         08/29/2020
 //
-// LAST EDITED:     09/09/2020
+// LAST EDITED:     09/11/2020
 ////
 
 import React from 'react';
-import Module from './flac-decoder/StreamDecoder';
+import PATH from './ReachCodecGlue';
+let reachCodec;
 
-const url = 'ws://localhost:5000';
 class Player extends React.Component {
-    static flac = undefined;
-
     constructor(properties) {
         super(properties);
-        this.state = {
-            message: ""
-        };
-
-        this.initializeDecoder();
-        this.obtainMessage = () => {};
+        this.state = {ready: false};
+        this.play = this.play.bind(this);
     }
 
-    initializeDecoder() {
-        if (Player.flac === undefined) {
-            Player.flac = null;
-            Module().then(flac => {
-                Player.flac = flac;
-                this.obtainMessage = this.obtainMessage.bind(this);
+    componentDidMount() {
+        const script = document.createElement('script');
+        script.onload = () => {
+            window.ReachCodec().then(reachCodecModule => {
+                reachCodec = reachCodecModule;
+                this.setState(state => ({ready: true}));
             });
-        }
+        };
+        document.body.appendChild(script);
+        script.src = PATH;
     }
 
-    obtainMessage() {
-        const decoder = Player.flac.StreamDecoder();
-        this.setState(state => ({message: decoder.getMessage()}));
-    }
+    play() {}
 
     render() {
-        const connected = this.state.connected;
+        const ready = this.state.ready;
+        let message = "Play";
+        if (ready) {
+            const decoder = new reachCodec.StreamDecoder();
+            message = decoder.getMessage();
+        }
         return (
             <div className="Player">
-              {connected &&
-               <button onClick={this.obtainMessage}>
-                 {this.state.message || "Get Segment"}
-               </button>
-              }
+              {ready && <button onClick={this.play}>{message}</button>}
             </div>
         );
     }
