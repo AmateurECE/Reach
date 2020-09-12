@@ -24,6 +24,45 @@ the development server. To start the development environment, simply run
 
 To build the SPA for production, run `npm run build`.
 
+Dependencies for the SPA are currently managed using the Conan package manager.
+The dependencies are hosted on a private Conan server owned by Ethan Twardy,
+and any developers may need to reach out to him in order to obtain credentials
+for this server in order to install the dependencies. To install dependencies,
+first create a profile for cross-compiling with Emscripten:
+
+```
+conan profile new --detect emscripten
+```
+
+Next, manually edit this profile (stored at `~/.conan/profiles/emscripten`) to
+look like the following, replacing `<YourOS>` and `<YourArchitecture>` with
+your operating system and architecture, specifically. If you're not sure, copy
+them from your default profile (stored at `~/.conan/profiles/default`).
+
+```
+[settings]
+os=Emscripten
+os_build=<YourOS>
+arch=wasm
+arch_build=<YourArchitecture>
+compiler=emcc
+compiler.version=2.0
+compiler.libcxx=emsdk
+build_type=Release
+[options]
+[build_requires]
+[env]
+```
+
+Finally, install the dependencies and generate the build info:
+
+```
+conan install -pr=emscripten .
+```
+
+These steps only need to be performed when building for the first time, or when
+updating the `conanfile.txt`.
+
 To build the server application, run `npx webpack` from the `reach` directory.
 You may then test the server by running it with node:
 

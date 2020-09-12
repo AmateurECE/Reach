@@ -29,5 +29,10 @@ yarn-error.log*
 ethantwardy.xcuserdatad
 
 /reach-spa/ReachCodec/build/
-/reach-spa/ReachCodec/log/
+/reach-spa/log/
 /reach-spa/src/ReachCodecGlue.js
+conan.lock
+conanbuildinfo.cmake
+conanbuildinfo.txt
+conaninfo.txt
+graph_info.json
