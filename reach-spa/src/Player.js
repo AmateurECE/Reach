@@ -7,17 +7,18 @@
 //
 // CREATED:         08/29/2020
 //
-// LAST EDITED:     09/13/2020
+// LAST EDITED:     09/14/2020
 ////
 
 import React from 'react';
 import PATH from './ReachCodecGlue';
+import BufferedStreamReader from './BufferedStreamReader';
 let reachCodec;
 
 class Player extends React.Component {
     constructor(properties) {
         super(properties);
-        this.state = {ready: false, playing: false};
+        this.state = {ready: false, playing: false, filename: ""};
         this.play = this.play.bind(this);
 
         this.playCallback = () => {};
@@ -26,6 +27,8 @@ class Player extends React.Component {
 
     bindCallbacksAndData() {
         // TODO: this.decoder = new reachCodec.AudioStreamDecoder();
+        this.filePlaying = "";
+
         // Bind callbacks
         this.playCallback = this.play.bind(this);
         this.pauseCallback = this.pause.bind(this);
@@ -33,7 +36,9 @@ class Player extends React.Component {
 
     componentDidMount() {
         const script = document.createElement('script');
+        // Load the script...
         script.onload = () => {
+            // Perform async initialization...
             window.ReachCodec().then(reachCodecModule => {
                 reachCodec = reachCodecModule;
                 this.bindCallbacksAndData();
@@ -52,6 +57,9 @@ class Player extends React.Component {
     //
     play() {
         this.setState(state => ({playing: true}));
+
+        // Have to create the AudioContext here because in Chrome, AudioContext
+        // cannot be instantiated before a user gesture.
         if (!this.hasOwnProperty("audioContext")) {
             this.audioContext = new AudioContext();
             this.oscillator = this.audioContext.createOscillator();
@@ -59,9 +67,20 @@ class Player extends React.Component {
             this.oscillator.frequency.setValueAtTime(
                 440, this.audioContext.currentTime);
             this.oscillator.connect(this.audioContext.destination);
+            // this.oscillator.start();
+        } else {
+            // this.audioContext.resume();
         }
 
-        this.oscillator.start();
+        if (this.filePlaying !== this.state.filename) {
+            // The selected file has changed. Load the new file.
+            this.filePlaying = this.state.filename;
+            this.reader = new BufferedStreamReader(
+                this.filePlaying, 65536);
+            this.reader.onRead = message => console.log(message);
+            this.reader.onBufferFull = message => console.log('Full buffer!');
+            this.reader.read();
+        }
     }
 
     //
@@ -69,15 +88,21 @@ class Player extends React.Component {
     //
     pause() {
         this.setState(state => ({playing: false}));
-        this.oscillator.stop();
+        this.audioContext.suspend();
     }
 
     render() {
         const playing = this.state.playing;
         return (
             <div className="Player">
-              {(playing && <button onClick={this.pauseCallback}>Pause</button>)
-               || <button onClick={this.playCallback}>Play</button>}
+              <label>Filename:
+                <input name="filename" type="text" value={this.state.filename}
+                       onChange={event => this.setState({
+                           filename: event.target.value})}/>
+              </label>
+              <input type="button" value={(playing && "Pause") || "Play"}
+                     onClick={(playing && this.pauseCallback)
+                              || this.playCallback}/>
             </div>
         );
     }

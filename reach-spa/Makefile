@@ -8,10 +8,11 @@
 #
 # CREATED:	    09/11/2020
 #
-# LAST EDITED:	    09/12/2020
+# LAST EDITED:	    09/14/2020
 ###
 
 build=$(shell realpath .)/ReachCodec/build/bin
+music=$(shell realpath .)/music
 nginxConf=$(shell realpath .)/reach-development.conf
 start: ReachCodec
 	cp -f ReachCodec/DevelopmentGlue.js src/ReachCodecGlue.js
@@ -19,7 +20,8 @@ start: ReachCodec
 	-docker stop reach
 	docker run -d --rm --name reach -p "8080:80" \
 		-v "$(build):/var/www/reach:ro" \
-		-v "$(nginxConf):/etc/nginx/conf.d/default.conf:ro"\
+		-v "$(music):/var/www/music:ro" \
+		-v "$(nginxConf):/etc/nginx/conf.d/default.conf:ro" \
 		-v "`realpath .`/log:/var/log/nginx" \
 		nginx:latest
 	react-scripts start
