@@ -7,7 +7,7 @@
 #
 # CREATED:          09/12/2020
 #
-# LAST EDITED:      09/13/2020
+# LAST EDITED:      09/15/2020
 ###
 
 cmake_minimum_required(VERSION 3.15.1)
@@ -22,7 +22,9 @@ list(JOIN PROJECT_FLAGS " " PROJECT_FLAGS)
 string(CONCAT CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${PROJECT_FLAGS}")
 
 set(REACH_CODEC_SOURCES
-  src/AudioStreamDecoder.cpp)
+  src/AudioStreamDecoder.cpp
+  src/DecoderFactory.cpp
+  src/FlacDecoder.cpp)
 
 add_executable(ReachCodec ${REACH_CODEC_SOURCES})
 set_target_properties(ReachCodec PROPERTIES

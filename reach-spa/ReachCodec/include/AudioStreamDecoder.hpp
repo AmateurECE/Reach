@@ -9,7 +9,7 @@
 //
 // CREATED:         09/13/2020
 //
-// LAST EDITED:     09/13/2020
+// LAST EDITED:     09/15/2020
 ////
 
 #ifndef __ET_AUDIOSTREAMDECODER__
@@ -18,15 +18,18 @@
 #include <emscripten.h>
 #include <emscripten/bind.h>
 
-namespace ReachCodec {
-class AudioStreamDecoder {
+#include <namespace.hpp>
+
+class ReachCodec::AudioStreamDecoder {
 public:
-  AudioStreamDecoder() = default;
+  AudioStreamDecoder();
 
   emscripten::val decodeChunk(emscripten::val chunkBuffer);
   void reset();
+
+private:
+  std::unique_ptr<Interfaces::Decoder> m_decoder;
 };
-}
 
 #endif // __ET_AUDIOSTREAMDECODER__
 

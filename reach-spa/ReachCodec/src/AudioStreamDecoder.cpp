@@ -7,21 +7,38 @@
 //
 // CREATED:         09/09/2020
 //
-// LAST EDITED:     09/13/2020
+// LAST EDITED:     09/15/2020
 ////
 
-#include <AudioStreamDecoder.h>
+#include <vector>
+#include <stdint.h>
+
+#include <AudioStreamDecoder.hpp>
+#include <DecoderFactory.hpp>
+#include <Interfaces/Decoder.hpp>
 // #include <FLAC++/decoder.h>
 
 using namespace emscripten;
 using namespace ReachCodec;
 
-void AudioStreamDecoder::reset()
+AudioStreamDecoder::AudioStreamDecoder()
+  : m_decoder{nullptr}
 {}
 
-val AudioStreamDecoder::decodeChunk(val)
+void AudioStreamDecoder::reset()
 {
-  return val::array();
+  m_decoder = nullptr;
+}
+
+val AudioStreamDecoder::decodeChunk(val byteBuffer)
+{
+  std::vector<uint8_t> byteData = vecFromJSArray<uint8_t>(byteBuffer);
+  uint8_t magicBytes[4] = {byteData[0], byteData[1], byteData[2], byteData[3]};
+  if (nullptr == m_decoder) {
+    m_decoder = DecoderFactory::makeDecoder(magicBytes);
+  }
+
+  return m_decoder->decodeChunk(byteData);
 }
 
 EMSCRIPTEN_BINDINGS(AudioStreamDecoder) {
