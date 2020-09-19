@@ -15,20 +15,19 @@
 #ifndef __ET_AUDIOSTREAMDECODER__
 #define __ET_AUDIOSTREAMDECODER__
 
-#include <emscripten.h>
-#include <emscripten/bind.h>
-
 #include <namespace.hpp>
+#include <BufferedAudioStreamWriter.hpp>
 
 class ReachCodec::AudioStreamDecoder {
 public:
-  AudioStreamDecoder();
+  AudioStreamDecoder(BufferedAudioStreamWriter writer);
 
-  emscripten::val decodeChunk(emscripten::val chunkBuffer, bool endOfStream);
+  void decodeChunk(emscripten::val chunkBuffer, bool endOfStream);
   void reset();
 
 private:
   std::unique_ptr<Interfaces::Decoder> m_decoder;
+  BufferedAudioStreamWriter m_writer;
 };
 
 #endif // __ET_AUDIOSTREAMDECODER__

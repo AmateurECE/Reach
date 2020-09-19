@@ -12,6 +12,7 @@
 
 #include <vector>
 #include <stdint.h>
+#include <emscripten/bind.h>
 
 #include <AudioStreamDecoder.hpp>
 #include <DecoderFactory.hpp>
@@ -20,8 +21,8 @@
 using namespace emscripten;
 using namespace ReachCodec;
 
-AudioStreamDecoder::AudioStreamDecoder()
-  : m_decoder{nullptr}
+AudioStreamDecoder::AudioStreamDecoder(BufferedAudioStreamWriter writer)
+  : m_decoder{nullptr}, m_writer{writer}
 {}
 
 void AudioStreamDecoder::reset()
@@ -29,24 +30,16 @@ void AudioStreamDecoder::reset()
   m_decoder = nullptr;
 }
 
-val AudioStreamDecoder::decodeChunk(val byteBuffer, bool endOfStream)
+void AudioStreamDecoder::decodeChunk(val byteBuffer, bool endOfStream)
 {
   std::vector<uint8_t> byteData = vecFromJSArray<uint8_t>(byteBuffer);
   if (nullptr == m_decoder) {
     uint8_t magicBytes[4] = {byteData[0], byteData[1], byteData[2],
                              byteData[3]};
-    m_decoder = DecoderFactory::makeDecoder(magicBytes);
+    m_decoder = DecoderFactory::makeDecoder(magicBytes, m_writer);
   }
 
-  return m_decoder->decodeChunk(byteData, endOfStream);
-}
-
-EMSCRIPTEN_BINDINGS(AudioStreamDecoder) {
-  class_<AudioStreamDecoder>("AudioStreamDecoder")
-    .constructor<>()
-    .function("reset", &AudioStreamDecoder::reset)
-    .function("decodeChunk", &AudioStreamDecoder::decodeChunk)
-    ;
+  m_decoder->decodeChunk(byteData, endOfStream);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

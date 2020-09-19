@@ -22,7 +22,7 @@ using namespace ReachCodec::Decoders;
 //
 // Public decoder interface
 //
-FlacDecoder::FlacDecoder()
+FlacDecoder::FlacDecoder(BufferedAudioStreamWriter writer)
   : // Memory related to main fiber
     m_mainFiber{std::make_shared<emscripten_fiber_t>()},
     m_mainAsyncStack{new char[s_mainAsyncStackSize],
@@ -36,7 +36,8 @@ FlacDecoder::FlacDecoder()
                        std::default_delete<char[]>()},
 
     // Decoder
-    m_decoder{std::make_shared<StreamDecoderImpl>(m_mainFiber, m_decodeFiber)}
+    m_decoder{std::make_shared<StreamDecoderImpl>(m_mainFiber, m_decodeFiber,
+                                                  writer)}
 {
   // Initialize the main fiber
   emscripten_fiber_init_from_current_context(m_mainFiber.get(),
@@ -61,27 +62,14 @@ FlacDecoder::FlacDecoder()
   emscripten_fiber_swap(m_mainFiber.get(), m_decodeFiber.get());
 }
 
-val FlacDecoder::decodeChunk(std::vector<uint8_t> bytes, bool endOfStream)
+void FlacDecoder::decodeChunk(std::vector<uint8_t> bytes, bool endOfStream)
 {
-  // Start by clearing the output vector. It could contain residual data from
-  // a previous call to decodeChunk().
-  m_decoder->clearOutput();
-
   // Copy new data in, swap to decode fiber. Potentially set end_of_stream.
   m_decoder->addNewData(bytes);
   if (endOfStream) {
     m_decoder->setEndOfStreamFlag();
   }
   emscripten_fiber_swap(m_mainFiber.get(), m_decodeFiber.get());
-
-  val output = val::array();
-  std::vector<std::vector<int32_t>>& outputVector = m_decoder->getOutput();
-  for (unsigned long i = 0; i < outputVector.size(); i++) {
-    output.call<void>("push", val(typed_memory_view(outputVector[i].size(),
-          outputVector[i].data())));
-  }
-
-  return output;
 }
 
 //
@@ -89,23 +77,15 @@ val FlacDecoder::decodeChunk(std::vector<uint8_t> bytes, bool endOfStream)
 //
 FlacDecoder::StreamDecoderImpl
 ::StreamDecoderImpl(std::shared_ptr<emscripten_fiber_t> mainFiber,
-  std::shared_ptr<emscripten_fiber_t> thisFiber)
-  : m_mainFiber{mainFiber}, m_thisFiber{thisFiber}, m_endOfStream{false}
+  std::shared_ptr<emscripten_fiber_t> thisFiber,
+  BufferedAudioStreamWriter writer)
+  : m_mainFiber{mainFiber}, m_thisFiber{thisFiber}, m_endOfStream{false},
+    m_writer{writer}
 {}
 
 void FlacDecoder::StreamDecoderImpl::addNewData(std::vector<uint8_t> newBytes)
 {
   std::copy(newBytes.begin(), newBytes.end(), std::back_inserter(m_bytes));
-}
-
-std::vector<std::vector<int32_t>>& FlacDecoder::StreamDecoderImpl::getOutput()
-{
-  return m_output;
-}
-
-void FlacDecoder::StreamDecoderImpl::clearOutput()
-{
-  m_output.clear();
 }
 
 void FlacDecoder::StreamDecoderImpl::setEndOfStreamFlag()
@@ -140,20 +120,13 @@ FlacDecoder::StreamDecoderImpl::read_callback(FLAC__byte buffer[],
 FlacDecoder::StreamDecoderImpl::write_callback(const ::FLAC__Frame* frame,
   const FLAC__int32* const buffer[])
 {
-  const unsigned int numberOfChannels = frame->header.channels;
+  // Write the decoded audio data to the buffered stream writer.
+  AudioBufferMetadata metadata;
+  metadata.numberOfChannels = frame->header.channels;
+  metadata.blockSize = frame->header.blocksize;
+  metadata.sampleRate = frame->header.sample_rate;
 
-  // TODO: Once we begin handling metadata, move this to the metadata_callback.
-  if (m_output.empty()) {
-    for (unsigned int i = 0; i < numberOfChannels; i++) {
-      m_output.push_back(std::vector<int32_t>());
-    }
-  }
-
-  // Copy the decoded frames into the output vector.
-  for (unsigned int i = 0; i < numberOfChannels; ++i) {
-    std::copy(buffer[i], buffer[i] + frame->header.blocksize,
-      std::back_inserter(m_output[i]));
-  }
+  m_writer.write(metadata, buffer);
   return ::FLAC__STREAM_DECODER_WRITE_STATUS_CONTINUE;
 }
 

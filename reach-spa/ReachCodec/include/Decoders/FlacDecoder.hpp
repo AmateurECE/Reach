@@ -7,18 +7,20 @@
 //
 // CREATED:         09/15/2020
 //
-// LAST EDITED:     09/18/2020
+// LAST EDITED:     09/19/2020
 ////
 
 #ifndef __ET_FLACDECODER__
 #define __ET_FLACDECODER__
 
+#include <vector>
 #include <stdlib.h>
 #include <emscripten/fiber.h>
 #include <FLAC++/decoder.h>
 
 #include <namespace.hpp>
 #include <Interfaces/Decoder.hpp>
+#include <BufferedAudioStreamWriter.hpp>
 
 //
 // Public decoder interface
@@ -26,10 +28,10 @@
 class ReachCodec::Decoders::FlacDecoder : public Interfaces::Decoder
 {
 public:
-  FlacDecoder();
+  FlacDecoder(BufferedAudioStreamWriter writer);
   virtual ~FlacDecoder() {}
-  virtual emscripten::val decodeChunk(std::vector<uint8_t> byteData,
-    bool endOfStream) final override;
+  virtual void decodeChunk(std::vector<uint8_t> byteData, bool endOfStream)
+    final override;
 
 private:
   class StreamDecoderImpl;
@@ -57,10 +59,9 @@ class ReachCodec::Decoders::FlacDecoder::StreamDecoderImpl
 {
 public:
   StreamDecoderImpl(std::shared_ptr<emscripten_fiber_t> mainFiber,
-    std::shared_ptr<emscripten_fiber_t> thisFiber);
+    std::shared_ptr<emscripten_fiber_t> thisFiber,
+    BufferedAudioStreamWriter writer);
   void addNewData(std::vector<uint8_t> newBytes);
-  std::vector<std::vector<int32_t>>& getOutput();
-  void clearOutput();
   void setEndOfStreamFlag();
 
 protected:
@@ -73,10 +74,10 @@ protected:
 
 private:
   std::vector<uint8_t> m_bytes;
-  std::vector<std::vector<int32_t>> m_output;
   std::shared_ptr<emscripten_fiber_t> m_mainFiber;
   std::shared_ptr<emscripten_fiber_t> m_thisFiber;
   bool m_endOfStream;
+  BufferedAudioStreamWriter m_writer;
 };
 
 #endif // __ET_FLACDECODER__

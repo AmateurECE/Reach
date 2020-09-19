@@ -26,7 +26,6 @@ class Player extends React.Component {
     }
 
     bindCallbacksAndData() {
-        this.decoder = new reachCodec.AudioStreamDecoder();
         this.filePlaying = "";
 
         // Bind callbacks
@@ -64,16 +63,12 @@ class Player extends React.Component {
 
         // Have to create the AudioContext here because in Chrome, AudioContext
         // cannot be instantiated before a user gesture.
-        if (!this.hasOwnProperty("audioContext")) {
-            this.audioContext = new AudioContext();
-            this.oscillator = this.audioContext.createOscillator();
-            this.oscillator.type = 'square';
-            this.oscillator.frequency.setValueAtTime(
-                440, this.audioContext.currentTime);
-            this.oscillator.connect(this.audioContext.destination);
-            // this.oscillator.start();
-        } else {
-            // this.audioContext.resume();
+        if (!this.hasOwnProperty("decoder")) {
+            this.audioPlayer = new reachCodec.AudioPlayer();
+            this.bufferedWriter = new reachCodec.BufferedAudioStreamWriter(
+                65536, this.audioPlayer);
+            this.decoder = new reachCodec.AudioStreamDecoder(
+                this.bufferedWriter);
         }
 
         if (this.filePlaying !== this.state.filename) {

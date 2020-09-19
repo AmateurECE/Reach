@@ -7,7 +7,7 @@
 //
 // CREATED:         09/15/2020
 //
-// LAST EDITED:     09/15/2020
+// LAST EDITED:     09/19/2020
 ////
 
 #ifndef __ET_NAMESPACE__
@@ -22,7 +22,10 @@ namespace ReachCodec {
     class FlacDecoder;
   }
 
+  struct AudioBufferMetadata;
+  class AudioPlayer;
   class AudioStreamDecoder;
+  class BufferedAudioStreamWriter;
   class DecoderFactory;
 }
 
