@@ -7,7 +7,7 @@
 #
 # CREATED:          09/12/2020
 #
-# LAST EDITED:      09/15/2020
+# LAST EDITED:      09/17/2020
 ###
 
 cmake_minimum_required(VERSION 3.15.1)
@@ -17,7 +17,8 @@ include(conanbuildinfo.cmake)
 conan_basic_setup()
 
 list(APPEND PROJECT_FLAGS "--bind" "-Wall" "-Wextra" "-Os" "-s FILESYSTEM=0"
-  "-s ENVIRONMENT=web" "-s MODULARIZE=1" "-s EXPORT_NAME=ReachCodec")
+  "-s ENVIRONMENT=web" "-s MODULARIZE=1" "-s EXPORT_NAME=ReachCodec"
+  "-s ASYNCIFY=1" "-std=c++17")
 list(JOIN PROJECT_FLAGS " " PROJECT_FLAGS)
 string(CONCAT CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${PROJECT_FLAGS}")
 

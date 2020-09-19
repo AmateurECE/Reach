@@ -7,7 +7,7 @@
 //
 // CREATED:         09/15/2020
 //
-// LAST EDITED:     09/15/2020
+// LAST EDITED:     09/18/2020
 ////
 
 #ifndef __ET_DECODER_HPP__
@@ -21,7 +21,8 @@ class ReachCodec::Interfaces::Decoder
 {
 public:
   virtual ~Decoder() {};
-  virtual emscripten::val decodeChunk(std::vector<uint8_t> byteData) = 0;
+  virtual emscripten::val decodeChunk(std::vector<uint8_t> byteData,
+    bool endOfStream) = 0;
 };
 
 #endif // __ET_DECODER_HPP__

@@ -7,7 +7,7 @@
 //
 // CREATED:         08/29/2020
 //
-// LAST EDITED:     09/14/2020
+// LAST EDITED:     09/19/2020
 ////
 
 import React from 'react';
@@ -26,7 +26,7 @@ class Player extends React.Component {
     }
 
     bindCallbacksAndData() {
-        // TODO: this.decoder = new reachCodec.AudioStreamDecoder();
+        this.decoder = new reachCodec.AudioStreamDecoder();
         this.filePlaying = "";
 
         // Bind callbacks
@@ -50,6 +50,10 @@ class Player extends React.Component {
         };
         document.body.appendChild(script);
         script.src = PATH;
+    }
+
+    decodeAndScheduleBuffer(message) {
+        this.decoder.decodeChunk(message.bytes, message.done);
     }
 
     //
@@ -77,8 +81,8 @@ class Player extends React.Component {
             this.filePlaying = this.state.filename;
             this.reader = new BufferedStreamReader(
                 this.filePlaying, 65536);
-            this.reader.onRead = message => console.log(message);
-            this.reader.onBufferFull = message => console.log('Full buffer!');
+            // TODO: this.reader.onRead = message => console.log(message);
+            this.reader.onBufferFull = this.decodeAndScheduleBuffer.bind(this);
             this.reader.read();
         }
     }

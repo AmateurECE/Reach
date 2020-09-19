@@ -9,7 +9,7 @@
 //
 // CREATED:         09/13/2020
 //
-// LAST EDITED:     09/15/2020
+// LAST EDITED:     09/19/2020
 ////
 
 #ifndef __ET_AUDIOSTREAMDECODER__
@@ -24,7 +24,7 @@ class ReachCodec::AudioStreamDecoder {
 public:
   AudioStreamDecoder();
 
-  emscripten::val decodeChunk(emscripten::val chunkBuffer);
+  emscripten::val decodeChunk(emscripten::val chunkBuffer, bool endOfStream);
   void reset();
 
 private:
